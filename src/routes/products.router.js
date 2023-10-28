@@ -40,9 +40,12 @@ const products = [
     }
 ]
 
-//router.get('/api/products', (req, res) => {
-  //  res.json({ products });
-//});
+router.get("/products", (req, res) => {
+    // Obtén la lista de productos y proporciona datos a la vista
+    
+    res.render("products", { products });
+});
+
 router.get('/api/products', (req, res) => {
     const { limit = 10, page = 1, sort, query } = req.query;
 
@@ -54,29 +57,40 @@ router.get('/api/products', (req, res) => {
         );
     }
 
+    // Calcula el índice de inicio y final para la paginación
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    // Limita los productos según los índices calculados
+    const limitedProducts = filteredProducts.slice(startIndex, endIndex);
+
     // Realiza ordenamiento según el parámetro sort (asc/desc)
     if (sort) {
         if (sort === 'asc') {
-            filteredProducts.sort((a, b) => a.precio - b.precio);
+            limitedProducts.sort((a, b) => a.precio - b.precio);
         } else if (sort === 'desc') {
-            filteredProducts.sort((a, b) => b.precio - a.precio);
+            limitedProducts.sort((a, b) => b.precio - a.precio);
         }
     }
 
     // Calcula los valores relacionados con la paginación
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
-
-    // Calcula los valores de la paginación
     const totalPages = Math.ceil(filteredProducts.length / limit);
     const prevPage = page > 1 ? +page - 1 : null;
     const nextPage = page < totalPages ? +page + 1 : null;
 
-    // Crea el objeto de respuesta
+    // Realiza ordenamiento según el parámetro sort (asc/desc)
+    if (sort) {
+        if (sort === 'asc') {
+            limitedProducts.sort((a, b) => a.precio - b.precio);
+        } else if (sort === 'desc') {
+            limitedProducts.sort((a, b) => b.precio - a.precio);
+        }
+    }
+
+    // Crea el objeto de respuesta con los productos limitados
     const response = {
         status: 'success',
-        payload: paginatedProducts,
+        payload: limitedProducts,
         totalPages,
         prevPage,
         nextPage,
@@ -89,7 +103,6 @@ router.get('/api/products', (req, res) => {
 
     res.json(response);
 });
-
 
 router.get('/api/products/:pid', (req, res) => {
     const pid = parseInt(req.params.pid);
@@ -149,7 +162,7 @@ router.put('/api/products/:pid', (req, res) => {
 
 
 router.delete('/api/products/:pid', (req, res) => {
-    const pid = parseInt(req.params.pid); 
+    const pid = parseInt(req.params.pid);
 
     const productIndex = products.find((product) => product.id === pid);
 

@@ -3,6 +3,7 @@ const productsRouter = require("./routes/products.router")
 const cartsRouter = require("./routes/carts.router")
 const { default: mongoose } = require("mongoose")
 const { engine } = require("express-handlebars")
+//const exphbs = require("express-handlebars");
 const path = require('path');
 
 const app = express();
@@ -17,9 +18,11 @@ app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 
 //Handlebars
+//app.engine("handlebars", exphbs());
 app.engine("handlebars", engine())
 app.set("view engine", "handlebars")
 //app.set("views", path.resoleve(__dirname + "/views"))
+app.set("views", path.join(__dirname, "views"));
 
 
 app.listen(PORT, () => {

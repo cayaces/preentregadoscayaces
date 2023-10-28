@@ -44,10 +44,10 @@ const products = [
 
 router.get('/api/carts/:cid', (req, res) => {
     const cartId = parseInt(req.params.cid);
-    const cart = carts.find((cart) => cart.id === cartId);
+   // const cart = carts.find((cart) => cart.id === cartId);
 
         // Utiliza "populate" para obtener los productos completos
-        CartModel.findById(cartId).populate('products').exec((err, cart) => {
+        cartModel.findById(cartId).populate('products').exec((err, cart) => {
             if (err || !cart) {
                 return res.status(404).json({ error: 'Carrito no encontrado.' });
             }
