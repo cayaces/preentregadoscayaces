@@ -9,11 +9,14 @@ const cartsSchema = new mongoose.Schema({
 
     products: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Product" // Hace referencia al modelo de Products
-        }
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "product" // Hace referencia al modelo de Products
+            },
+            quantity: Number,
+        },
     ],
-    
+
 })
 
 //exportacion de mongoose

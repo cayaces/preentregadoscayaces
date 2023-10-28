@@ -195,9 +195,4 @@ router.delete('/api/carts/:cid', (req, res) => {
     res.json({ message: 'Todos los productos del carrito han sido eliminados exitosamente' });
 });
 
-
-
-
-
-
 module.exports = router;

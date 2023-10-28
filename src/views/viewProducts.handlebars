@@ -1,42 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-<!-- views/products.handlebars -->
-
-<h1>Lista de Productos</h1>
-
-<ul>
-
-    {{#each products}}
-
-    <li>
-
-        <h3>{{nombre}}</h3>
-
-        <p>Precio: ${{precio}}</p>
-        <p>Categoría: {{categoria}}</p>
-
-        <form action="/api/carts/{{cartId}}/products" method="post">
-
-            <input type="hidden" name="productId" value="{{id}}">
-            <input type="submit" value="Agregar al carrito">
-
-        </form>
-
-        <a href="/products/{{id}}">Ver detalles</a>
-
-    </li>
-
-    {{/each}}
-
-</ul>
-
-
-</body>
-</html>
+<div>
+    <h1>Lista de productos hndlebars</h1>
+    <div>
+        <div>
+            {{#each products}}
+            <div>
+                <h2>{{this.descripcion}}</h2>
+                <p>Precio: ${{this.precio}}</p>
+                <a href="/api/products/{{this.cid}}">Ver Detalle</a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

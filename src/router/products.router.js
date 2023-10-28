@@ -46,7 +46,7 @@ router.get("/products", (req, res) => {
     res.render("products", { products });
 });
 
-router.get('/api/products', (req, res) => {
+router.get("/api/products", (req, res) => {
     const { limit = 10, page = 1, sort, query } = req.query;
 
     // Realiza filtrado según los parámetros
